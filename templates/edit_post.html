@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %}
+Edit post
+{% endblock %}
+
+{% block button %}
+    <form class="d-inline" method="post" action="/welcome">
+        <input type="hidden" value="logout" name="logout">
+        <input class="btn btn-primary" type="submit" value="Logout">
+    </form>
+{% endblock %}
+
+
+{% block content %}    
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h1>Edit post</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <p class="error-msg"> {{error}}</p> 
+        </div>
+    </div>
+    {% if post_to_edit is defined %}
+        <form method="post">
+            <div class="row">
+                <div class="col-md-2 col-sm-2 col-xs-2 text-right">
+                    <h3>Post title:</h3>
+                </div>
+                <div class="col-md-10 col-sm-10 col-xs-10">
+                    <input class="width100" type="text" name="edited_title" value="{{post_to_edit.title}}">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2 col-sm-2 col-xs-2 text-right">
+                    <h3>Post text:</h3>
+                </div>
+                <div class="col-md-10 col-sm-10 col-xs-10">
+                    <textarea class="width100 height250" name="edited_post">{{post_to_edit.post}}</textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2 col-sm-2 col-xs-2 text-right">
+                </div>
+                <div class="col-md-10 col-sm-10 col-xs-10 text-center">
+                    <input type="hidden" name="edited_key_id" value="{{post_to_edit.key().id()}}">
+                    <input class = "btn btn-default" type="submit" value="Edit post">
+                    <a class="btn btn-default" href="/post/{{post_to_edit.key().id()}}">Cancel</a>
+                </div>
+            </div>            
+        </form>
+    {% elif edited_key_id is defined %}
+        <form method="post">
+            <div class="row">
+                <div class="col-md-2 col-sm-2 col-xs-2 text-right">
+                    <h3>Post title:</h3>
+                </div>
+                <div class="col-md-10 col-sm-10 col-xs-10">
+                    <input class="width100" type="text" name="edited_title" value="{{edited_title}}">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2 col-sm-2 col-xs-2 text-right">
+                    <h3>Post text:</h3>
+                </div>
+                <div class="col-md-10 col-sm-10 col-xs-10">
+                    <textarea class="width100 height250" name="edited_post">{{edited_post}}</textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2 col-sm-2 col-xs-2 text-right">
+                </div>
+                <div class="col-md-10 col-sm-10 col-xs-10 text-center">
+                    <input type="hidden" name="edited_key_id" value="{{edited_key_id}}">
+                    <input class = "btn btn-default" type="submit" value="Edit post">
+                    <a class="btn btn-default" href="/post/{{edited_key_id}}">Cancel</a>
+                </div>
+            </div>            
+        </form>
+     {% else %}
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+                <p class="error-msg">Something went wrong<p>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

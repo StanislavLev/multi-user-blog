@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+
+{% block title %}
+post {{post.title}}
+{% endblock %}
+
+{% block button %}
+    {% if guest is not defined %}
+        <form class="d-inline" action="/welcome">
+            <input class="btn btn-primary" type="submit" value="Home page">
+        </form>
+        <form class="d-inline" method="post" action="/welcome">
+            <input type="hidden" value="logout" name="logout">
+            <input class="btn btn-primary" type="submit" value="Logout">
+        </form>
+    {% else %}
+            <a href="/" class="btn btn-primary">Home page</a>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12 text-center">
+            {% if guest is defined %}
+                {% set username = guest %}
+            {% endif %}
+            <h2>Welcome, {{username}}!</h2>
+        </div>
+    </div>
+    <a name="{{post.created}}"></a> 
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <hr>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-9 col-sm-9 col-xs-9 text-center">
+            <u><h2>{{post.title}}</h2></u>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-9 col-sm-9 col-xs-9">
+            <h4 class="d-inline date">posted at:{{post.created.strftime('%m-%d-%Y %H:%M')}} |</h4>
+            <h4 class="d-inline date">last updated at:{{post.last_updated.strftime('%m-%d-%Y %H:%M')}} </h4>
+        </div>
+        <div class="col-md-3 col-sm-3 col-xs-3">
+            <h4 class="text-center">Author: {{post.username}}</h4>
+        </div>
+    </div>
+    <div class="row valign_top">
+        <div class="col-md-9 col-sm-9 col-xs-9">
+                <p class="text-justify">{{post.post_nl2br() | safe}}</p>
+        </div>
+        <div class="col-md-3 col-sm-3 col-xs-3 text-center">
+            {% if guest is not defined %}
+                <form method = "post" action="/add_comment">
+                    <input type="hidden" value="{{post.key().id()}}" name="post_to_comment_key_id">
+                    <input class="btn btn-info" type="submit" value="Add comment">
+                </form>
+                {% if not post.username == username %}
+                    <form method = "post">
+                        <input type="hidden" value="like" name="like">
+                        <input class="btn btn-success" type="submit" value="Like : {{post.get(post.key()).likes|length}}">
+                    </form>
+                    <form method = "post">
+                        <input type="hidden" value="unlike" name="like">
+                        <input class="btn btn-warning" type="submit" value="Unlike : {{post.get(post.key()).unlikes|length}}">
+                    </form>
+                {% else %}
+                    <form method="post" action="/edit_post">
+                        <input type="hidden" value="{{post.key().id()}}" name="key_id_to_edit">
+                        <input class="btn btn-default" type="submit" value="Edit post">
+                    </form>
+                    <form method = "post">
+                        <input type="hidden" value="delete" name="delete">
+                        <input class="btn btn-danger" type="submit" value="Delete post">
+                    </form>
+                {% endif %}
+            {% endif %}    
+        </div>
+    </div>
+    {% if no_comments %}
+        {% if guest is not defined %}
+            <div class="row">
+                <div class="col-md-9 col-sm-9 col-xs-9 text-center">
+                    <h2>Be the first to comment</h2>
+                </div>
+            </div>
+        {% else %}
+            <div class="row">
+                <div class="col-md-9 col-sm-9 col-xs-9 text-center">
+                    <h2>No one commented on the post</h2>
+                </div>
+            </div>
+        {% endif %}
+    {% else %}
+        <div class="row">
+            <div class="col-md-9 col-sm-9 col-xs-9 text-center">
+                <h2>Comments:</h2>
+            </div>
+        </div>
+        {% for comment in comments_db %}
+            <a name="{{comment.created}}"></a> 
+            <div class="row">
+                <div class="col-md-3 col-sm-3 col-xs-3">
+                    <h3 class="text-center">{{comment.username}} commented:</h3>
+                </div>
+                <div class="col-md-9 col-sm-9 col-xs-9">
+                    <h4 class="d-inline date">commented at:{{comment.created.strftime('%m-%d-%Y %H:%M')}} |</h4>
+                    <h4 class="d-inline date">last updated at:{{comment.last_updated.strftime('%m-%d-%Y %H:%M')}} </h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-9 col-sm-9 col-xs-9">
+                    <p>{{comment.comment_nl2br() | safe}}</p>
+                </div>
+            </div>    
+            {% if comment.username == username %}
+                <div class="row">
+                    <div class="col-md-9 col-sm-9 col-xs-9 text-right">
+                        <form class="d-inline" method = "post" action = "/edit_comment">
+                            <input type="hidden" value="{{comment.key().id()}}" name="comment_to_edit_key_id">
+                            <input class="btn btn-default" type="submit" value="Edit comment">
+                        </form>
+                        <form class="d-inline" method = "post">
+                            <input type="hidden" value="{{comment.key().id()}}" name="comment_to_delete_key_id">
+                            <input class="btn btn-danger" type="submit" value="Delete comment">
+                        </form>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endblock %}

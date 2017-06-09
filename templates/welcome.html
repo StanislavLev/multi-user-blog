@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %}
+Welcome
+{% endblock %}
+
+{% block button %}
+    {% if guest is defined %}
+        <a href="/signup" class="btn btn-primary">Sign up</a>
+        <a href="/login"  class="btn btn-primary">Log in</a>
+    {% else %}    
+        <form class="d-inline" method="post" action="/new_post">
+            <input type="hidden" name="new" value="new">
+            <input class="btn btn-primary" type="submit" value="Create new post">
+        </form>
+        <form class="d-inline" method="post">
+            <input type="hidden" value="logout" name="logout">
+            <input class="btn btn-primary" type="submit" value="Logout">
+        </form>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+            {% if guest is defined %}
+                {% set username = guest %}
+            {% endif %}
+            <h2>Welcome, {{username}}!</h2>
+            <hr>
+        </div>
+    </div>
+    <div class="row valign_top">
+        <div class="col-md-3 col-sm-3 col-xs-3">
+            <a name="Posts list"></a>
+            <h2>The latest posts:</h2>
+            {% for post in posts_db %}
+                <span class="fa fa-search-plus dark-blue"></span>
+                <a href="#{{post.created}}" class="dark-blue">{{post.title}}</a>
+                <br>
+            {% endfor %}
+        </div>
+        <div class="col-md-9 col-sm-9 col-xs-9">
+        {% for post in posts_db %}
+            <a name="{{post.created}}"></a> 
+            <div class="row">
+                <div class="col-md-9 col-sm-9 col-xs-9 text-center">
+                    <u><h2>{{post.title}}</h2></u>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-9 col-sm-9 col-xs-9">
+                    <h4 class="d-inline date">posted at:{{post.created.strftime('%m-%d-%Y %H:%M')}} |</h4>
+                    <h4 class="d-inline date">last updated at:{{post.last_updated.strftime('%m-%d-%Y %H:%M')}} </h4>
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-3">
+                    <h4 class="text-center">Author: {{post.username}}</h4>
+                    <h4 class="text-center"> <span class="fa fa-thumbs-o-up"></span>    :    {{post.likes|length}}</h4>
+                    <h4 class="text-center"> <span class="fa fa-thumbs-o-down"></span>    :    {{post.unlikes|length}}</h4>
+                </div>
+            </div>
+            <div class="row valign_top">
+                <div class="col-md-9 col-sm-9 col-xs-9">
+                    {% if post.post|length > 500 %}
+                        <p class="text-justify">{{post.post[0:500]}}...</p>
+                    {% else %}
+                        <p class="text-justify">{{post.post}}</p>
+                    {% endif %}
+                    <div class="col-md-6 col-sm-6 col-xs-6 text-left">
+                        <span class="fa fa-list dark-blue"></span>
+                        <a href="#Posts list" class="dark-blue" >Back to posts list</a>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-6 text-right">
+                        {% if guest is defined %}
+                            <form class="d-inline" action="/post/{{post.key().id()}}">
+                                <input type="hidden" name="guest" value="guest">
+                                <span class="fa fa-file-text-o dark-blue"></span>
+                                <input class="btn-link dark-blue" type="submit" value="Go to post page">
+                            </form>
+                        {% else %}
+                            <span class="fa fa-file-text-o dark-blue"></span>
+                            <a href="/post/{{post.key().id()}}" class="dark-blue">Go to post page</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <hr>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+{% endblock %}

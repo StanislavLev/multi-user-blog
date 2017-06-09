@@ -1,0 +1,108 @@
+
+* {
+  font-family: 'Alegreya', serif;
+  font-size: 18px;
+  color: black;
+  word-wrap: break-word;
+}
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+
+body {
+    background-image: url('../img/camping.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+	background-size: 100%;
+}
+
+
+hr {
+  border-top: 3px solid #7d97ad;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 5px;
+}
+
+.container-fluid {
+  margin-top: 20px;  
+  max-width: 1200px;
+}
+
+.row {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  align-items: center;
+}
+
+.width100 {
+  width: 100%;
+}
+
+.height250{
+  height: 250px;
+}
+
+.logo {
+  font-size: 50px;
+}
+
+.btn {
+  width: 150px;
+  margin-left: 5px;
+  margin-top: 5px;
+  font-size: 18px;
+}
+
+
+.btn-default {
+    color: black;
+}
+
+.light-grey {
+    background-color: lightgrey;
+    color: black;
+}
+
+.btn-wide {
+  margin-top: 5px;
+  width: 200px;
+}
+
+.error-msg {
+  color: red;
+}
+
+.d-inline {
+  display: inline;
+  vertical-align: middle;
+}
+
+.date {
+  color: DarkSlateGray;
+  margin: 0;
+}
+
+.valign_top{
+    align-items: flex-start;
+}
+
+.bgnd {
+  -webkit-box-shadow: 0px 0px 40px 20px rgba(176, 196, 222, 0.8);
+  -moz-box-shadow: 0px 0px 40px 20px rgba(176, 196, 222, 0.8);
+  box-shadow: 0px 0px 40px 20px rgba(176, 196, 222, 0.8);
+  background: rgb(176,196,222);
+  background: rgba(176, 196, 222, 0.8);
+}
+
+.dark-blue{
+    color: rgb(0, 0, 51);
+}

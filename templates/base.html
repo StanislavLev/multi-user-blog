@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>{% block title %} {% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="../js/jquery-3.1.1.min.js" defer></script>
+    <script src="../js/bootstrap.min.js" defer></script>
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../css/main.css" rel="stylesheet" />
+    <!--normalize.css in bootstrap" -->
+    <link href="https://fonts.googleapis.com/css?family=Alegreya:400,700,900" rel="stylesheet">
+    <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+  </head>
+  <body>
+      <div class="container-fluid bgnd">
+        <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-6">
+                <h1>Welcome to camping blog &#9978; </h1>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-6 text-right">
+                {% block button %}
+                {% endblock %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <hr>
+            </div>
+        </div>
+        {% block content %}
+        {% endblock %}
+    </div>
+  </body>
+</html>

@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}
+Edit comment
+{% endblock %}
+
+{% block button %}
+    <form class="d-inline" method="post" action="/welcome">
+        <input type="hidden" value="logout" name="logout">
+        <input class="btn btn-primary" type="submit" value="Logout">
+    </form>
+{% endblock %}
+
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+            <h1>Edit comment</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+            <p class="error-msg"> {{error}}</p> 
+        </div>
+    </div>
+    {% if comment_to_edit is defined%}
+        <form method="post">
+            <div class="row">
+                <div class="col-md-2 col-sm-2 col-xs-2 text-right">
+                    <h3>Comment text:</h3>
+                </div>
+                <div class="col-md-10 col-sm-10 col-xs-10">
+                    <textarea class="width100 height250" name="edited_comment_text">{{comment_to_edit.post_comment}}</textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2 col-sm-2 col-xs-2 text-right">
+                </div>
+                <div class="col-md-10 col-sm-10 col-xs-10 text-center">
+                    <input type="hidden" name="edited_comment_key_id" value="{{comment_to_edit.key().id()}}">
+                    <input class = "btn btn-default" type="submit" value="Edit comment">
+                    <a class="btn btn-default" href="/post/{{comment_to_edit.post_key_id}}">Cancel</a>
+                </div>
+            </div>            
+        </form>
+    {% elif edited_comment_key_id is defined%}
+        <form method="post">
+            <div class="row">
+                <div class="col-md-2 col-sm-2 col-xs-2 text-right">
+                    <h3>Comment text:</h3>
+                </div>
+                <div class="col-md-10 col-sm-10 col-xs-10">
+                    <textarea class="width100 height250" name="edited_comment_text"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2 col-sm-2 col-xs-2 text-right">
+                </div>
+                <div class="col-md-10 col-sm-10 col-xs-10 text-center">
+                    <input type="hidden" name="edited_comment_key_id" value="{{edited_comment_key_id}}">
+                    <input class = "btn btn-default" type="submit" value="Edit comment">
+                    <a class="btn btn-default" href="/post/{{edited_comment_key_id}}">Cancel</a>
+                </div>
+            </div>            
+        </form>
+    {% else %}
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+                <p class="error-msg">Something went wrong<p>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

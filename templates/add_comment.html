@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}
+Add comment
+{% endblock %}
+
+{% block button %}
+    <form class="d-inline" action="/post/{{post_to_comment_key_id}}">
+        <input class="btn btn-primary" type="submit" value="Post page">
+    </form>
+    <form class="d-inline" method="post" action="/welcome">
+        <input type="hidden" value="logout" name="logout">
+        <input class="btn btn-primary" type="submit" value="Logout">
+    </form>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h1>Add comment</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <p class="error-msg"> {{error}}</p> 
+        </div>
+    </div>
+    <form method="post">
+        <div class="row">
+            <div class="col-md-2 col-sm-2 col-xs-2 text-right">
+                <h3>Comment text:</h3>
+            </div>
+            <div class="col-md-10 col-sm-10 col-xs-10">
+                <textarea class="width100 height250" name="new_comment_text">{{new_comment_text}}</textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 col-sm-2 col-xs-2 text-right">
+            </div>
+            <div class="col-md-10 col-sm-10 col-xs-10 text-center">
+                <input type="hidden" name="commented_post_key_id" value="{{post_to_comment_key_id}}">
+                <input class = "btn btn-info btn-wide" type="submit" value="Add comment">
+            </div>
+        </div>            
+    </form>
+{% endblock %}

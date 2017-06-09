@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}
+New post
+{% endblock %}
+
+{% block button %}
+    <form class="d-inline" action="/welcome">
+        <input class="btn btn-primary" type="submit" value="Home page">
+    </form>
+    <form class="d-inline" method="post" action="/welcome">
+        <input type="hidden" value="logout" name="logout">
+        <input class="btn btn-primary" type="submit" value="Logout">
+    </form>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h1>New post</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <p class="error-msg"> {{error}}</p> 
+        </div>
+    </div>
+    <form method="post">
+        <div class="row">
+            <div class="col-md-2 col-sm-2 col-xs-2 text-right">
+                <h3>Post title:</h3>
+            </div>
+            <div class="col-md-10 col-sm-10 col-xs-10">
+                <input class="width100" type="text" name="title" value="{{title}}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 col-sm-2 col-xs-2 text-right">
+                <h3>Post text:</h3>
+            </div>
+            <div class="col-md-10 col-sm-10 col-xs-10">
+                <textarea class="width100 height250" name="post">{{post}}</textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 col-sm-2 col-xs-2 text-right">
+            </div>
+            <div class="col-md-10 col-sm-10 col-xs-10 text-center">
+                <input class = "btn btn-primary btn-wide" type="submit" value="Create new post">
+            </div>
+        </div>            
+    </form>
+{% endblock %}
